@@ -65,7 +65,7 @@ program MD_v10
 
    vacf = vacf_sum / real(ntraj, dp)
    call write_two_col('MD_g025_T13_VACF.dat', time_lag, vacf, ntau)
-   print *, 'Saved: MD_g025_T065_VACF.dat'
+   print *, 'Saved: MD_g025_T13_VACF.dat'
   
    call compute_vdos(vacf, vdos, omega, ntau, dt)
    call write_two_col('MD_g025_T13_VDOS.dat', omega, vdos, freq_steps)
