@@ -69,7 +69,7 @@ contains
 			coth_term = (beta*x/2.0_dp)*(1.0_dp/tanh(beta*x/2.0_dp))
 		end if
 		
-		z = x**4 - (1.69_dp+12.0_dp*g*y**2)*x**2 - (12.0_dp*g/beta)*(coth_term-1.0_dp)
+		z = x**4 - (3.69_dp+12.0_dp*g*y**2)*x**2 - (12.0_dp*g/beta)*(coth_term-1.0_dp)
 	end function f1
 
 	function f2(x) result(y)
@@ -81,14 +81,14 @@ contains
 	function a2f(omega,x) result(z)
 		real(dp), intent(in) :: omega, x
 		real(dp) :: z
-		z = (1.0_dp/(12.0_dp*g))*(omega**2-1.69_dp)-x**2
+		z = (1.0_dp/(12.0_dp*g))*(omega**2-3.69_dp)-x**2
 	end function a2f
 
 	function wf(omega, a2, x) result(y)
 		real(dp), intent(in) :: omega, a2, x
 		real(dp) :: y
 		y = temp * log(sinh(beta*omega/2.0_dp)/(beta*omega/2.0_dp)) - omega**2*a2/2.0_dp +  &
-		    0.5_dp*1.69_dp*a2 + 3.0_dp*g*a2**2 + 0.5_dp*(1.69_dp+12.0_dp*g*a2)*x**2 + g*x**4
+		    0.5_dp*3.69_dp*a2 + 3.0_dp*g*a2**2 + 0.5_dp*(3.69_dp+12.0_dp*g*a2)*x**2 + g*x**4
 	end function wf
 
 	function fex(x)
