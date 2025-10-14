@@ -1,6 +1,6 @@
-# Lattice-Dynamics — Molecular-Dynamics simulation of vibrations in a 1D crystal
+# Centroid Molecular Dynamics simulation of vibrations in a 1D crystal
 
-Classical MD code for a 1D optical-phonon chain that computes the vibrational density of states (VDOS) from velocity autocorrelation functions (VACFs). Dynamics are run in the NVT ensemble using the Bussi–Donadio–Parrinello (CSVR) thermostat.
+Classical and semiclassical MD code for a 1D optical-phonon chain that computes the vibrational density of states (VDOS) from velocity autocorrelation functions (VACFs). Dynamics are run in the NVT ensemble using the Bussi–Donadio–Parrinello (CSVR) thermostat. The effective potential for centroid molecular dynamics (CMD) is calculated using the method in Feynman and Kleinert's paper on effective classical partition function.
 
 ## Features
 - 1D chain with periodic boundary conditions; velocity-Verlet integrator.
