@@ -5,6 +5,7 @@ Classical and semiclassical MD code for a 1D optical-phonon chain that computes 
 ## Features
 - 1D chain with periodic boundary conditions; velocity-Verlet integrator.
 - CSVR thermostat (canonical sampling through velocity rescaling) with user-set time constant $$\tau$$.
+- CMD evolves the atoms on Feynman-Kleinert effective potential, the method is based on path integral formulation of quantum mechanics.
 - CSPD samples each normal mode at an effective temperature (see attached CSPD document for detail)
 - Real-space <-> normal-mode transforms; VACF $$C_k(t)$$; Fourier transform to spectra $$S_k(\omega)$$ and total VDOS.
 - Exports frequency–VDOS data for plotting.
@@ -23,5 +24,6 @@ $$H = \sum_{j=1}^N \Bigl[ \frac{p_j^2}{2} + h q_j^2 + g q_j^4 \Bigr] + \frac{1}{
 - `VCAF.dat` — two columns: time (t), VCAF.
 - `VDOS.dat` — two columns: frequency (`omega`), VDOS.
 
-## Reference (thermostat)
+## Reference
 - G. Bussi, D. Donadio, M. Parrinello, **Canonical sampling through velocity rescaling**, *J. Chem. Phys.* **126**, 014101 (2007). DOI: https://doi.org/10.1063/1.2408420
+- R. P. Feynman, H. Kleinert, **Effective classical partition functions**, *Phys. Rev. A* **34**, 5080–5084 (1986). DOI: https://doi.org/10.1103/PhysRevA.34.5080
