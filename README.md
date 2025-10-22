@@ -5,8 +5,8 @@ Classical and semiclassical MD code for a 1D optical-phonon chain that computes 
 ## Features
 - 1D chain with periodic boundary conditions; velocity-Verlet integrator.
 - CSVR thermostat (canonical sampling through velocity rescaling) with user-set time constant $$\tau$$.
-- CMD evolves the atoms on Feynman-Kleinert effective potential, the method is based on path integral formulation of quantum mechanics.
-- CSPD samples each normal mode at an effective temperature, the method is based on the diagonal coherent state representation of Kubo-transformed momentum operator. (see attached CSPD document for detail)
+- CMD (Centroid Molecular Dynamics) evolves the atoms on Feynman-Kleinert effective potential, the method is based on path integral formulation of quantum mechanics.
+- CSPD (Coherent State Phonon Dynamics) samples each normal mode at an effective temperature, the method is based on the diagonal coherent state representation of Kubo-transformed momentum operator. (see attached CSPD document for detail)
 - Real-space <-> normal-mode transforms; VACF $$C_k(t)$$; Fourier transform to spectra $$S_k(\omega)$$ and total VDOS.
 - Exports frequency–VDOS data for plotting.
 
