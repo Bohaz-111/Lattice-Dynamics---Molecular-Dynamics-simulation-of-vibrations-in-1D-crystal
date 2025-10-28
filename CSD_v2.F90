@@ -6,19 +6,17 @@ program CSD_v2
    integer,  parameter :: dp    = real64
    integer,  parameter :: n     = 128                ! Number of atoms
    real(dp), parameter :: pi    = 3.14159265358979323846264338327950288419_dp
-   real(dp), parameter :: temp  = 1.3_dp
+   real(dp), parameter :: temp  = 0.325_dp
    real(dp), parameter :: beta  = 1.0_dp/temp
    real(dp), parameter :: g     = 4.3_dp            ! Anharmonic (quartic) strength
    real(dp), parameter :: h     = 0.845_dp           ! On-site quadratic coefficient
-   real(dp), parameter :: tau   = 5.0_dp             ! Thermostat time constant
    real(dp), parameter :: dt    = 0.1_dp     
    integer,  parameter :: steps = 2400         
-   integer,  parameter :: ntau  = steps/2            
-   integer,  parameter :: equil_steps = 4800    
+   integer,  parameter :: ntau  = steps/2               
    integer,  parameter :: freq_steps = 5500
-   integer,  parameter :: ntraj = 2000
+   integer,  parameter :: ntraj = 1000
    real(dp), parameter :: eta = 0.02_dp ! Artificial damping
-   real(dp), parameter :: c2 = 3.3784497741552273_dp
+   real(dp), parameter :: c2 = 4.9638733147386214_dp
 
    real(dp)    :: q(n), p(n), f(n)
    real(dp)    :: omega_k(n), beta_eff(n)
@@ -90,12 +88,11 @@ program CSD_v2
    !$omp end parallel do
 
    vacf = vacf_sum / real(ntraj, dp)
-   vacf = vacf * temp / vacf(1)
    
    
-   call write_two_col('AAAAv13_CSPD_g43_T13_VACF.dat', time_lag, vacf, ntau)
+   call write_two_col('AAAAv13_CSPD_g43_T0325_VACF.dat', time_lag, vacf, ntau)
    call compute_vdos(vacf, vdos, omega, ntau, dt)
-   call write_two_col('AAAAv13_CSPD_g43_T13_VDOS.dat', omega, vdos, freq_steps)
+   call write_two_col('AAAAv13_CSPD_g43_T0325_VDOS.dat', omega, vdos, freq_steps)
 
 
 contains
@@ -112,13 +109,8 @@ contains
       q = 0.0_dp
 
       do i = 1, nn
-         if (omega_k(i) < 1.0e-10_dp) then
-            q_tmp(i) = sqrt(temp) * randn()
-            p_tmp(i) = sqrt(temp) * randn()
-         else
-            q_tmp(i) = sqrt(1.0_dp/(beta_eff(i)*omega_k(i)**2)) * randn()
-            p_tmp(i) = sqrt(1.0_dp/beta_eff(i)) * randn()
-         end if
+         q_tmp(i) = sqrt(1.0_dp/(beta_eff(i)*omega_k(i)**2)) * randn()
+         p_tmp(i) = sqrt(1.0_dp/beta_eff(i)) * randn()
       end do
 
       do j = 1, nn 
@@ -129,8 +121,8 @@ contains
             sumq  = sumq + q_tmp(k)*cos(theta)
             sump  = sump + p_tmp(k)*cos(theta)
          end do
-         q(j) = sumq  / sqrt(real(nn,dp))
-         p(j) = sump  / sqrt(real(nn,dp))
+         q(j) = sumq * sqrt(2.0_dp/real(nn,dp))
+         p(j) = sump * sqrt(2.0_dp/real(nn,dp))
       end do
 
    end subroutine init_config
@@ -138,9 +130,9 @@ contains
    pure subroutine force(q, f, g, h)
       real(dp), intent(in)  :: q(:), g, h
       real(dp), intent(out) :: f(:)
-      real(dp), parameter :: c2 = 3.3784497741552273_dp
-      real(dp), parameter :: c4 = 4.0292323520105899_dp
-      real(dp), parameter :: c6 = 0.043989475137244431_dp
+      real(dp), parameter :: c2 = 4.9638733147386214_dp
+      real(dp), parameter :: c4 = 2.6603906005613562_dp
+      real(dp), parameter :: c6 = 0.64207856698302102_dp
       integer :: jp, jm, j, nn
       real(dp) :: qp, qm
       nn = size(q)
@@ -198,7 +190,6 @@ contains
          vacf_out(i) = vacf_out(i) * exp(-eta*real(i-1,dp)*dt)
       end do
    end subroutine compute_vacf
-
 
    subroutine compute_vdos(vacf, vdos, omega, nvacf, dt_in)
       real(dp), intent(in) :: vacf(:)
